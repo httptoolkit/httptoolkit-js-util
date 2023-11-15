@@ -1,0 +1,33 @@
+{
+  "name": "@httptoolkit/util",
+  "version": "0.1.0",
+  "description": "A tiny utility package, sharing JS code widely used across HTTP Toolkit projects",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/httptoolkit/httptoolkit-js-util.git"
+  },
+  "keywords": [
+    "HTTP",
+    "Toolkit",
+    "utilities",
+    "promises"
+  ],
+  "author": "Tim Perry <tim@httptoolkit.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/httptoolkit/httptoolkit-js-util/issues"
+  },
+  "homepage": "https://github.com/httptoolkit/httptoolkit-js-util#readme",
+  "dependencies": {
+    "typescript": "5.2.2"
+  }
+}
