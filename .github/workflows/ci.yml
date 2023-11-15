@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: httptoolkit/act-build-base:v3.0.0
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, '20.8.0', '*']
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: 'package.json'
+
+      - run: npm install
+
+      - run: npm run build
