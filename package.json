@@ -27,7 +27,7 @@
     "url": "https://github.com/httptoolkit/httptoolkit-js-util/issues"
   },
   "homepage": "https://github.com/httptoolkit/httptoolkit-js-util#readme",
-  "dependencies": {
+  "devDependencies": {
     "typescript": "5.2.2"
   }
 }
