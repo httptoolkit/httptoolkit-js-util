@@ -1,6 +1,6 @@
 {
   "name": "@httptoolkit/util",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A tiny utility package, sharing JS code widely used across HTTP Toolkit projects",
   "main": "dist/index.js",
   "files": [
