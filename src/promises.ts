@@ -1,8 +1,20 @@
 export type MaybePromise<T> = T | Promise<T>;
 
-export const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms)
-);
+export const delay = (ms: number, options: {
+    /**
+     * If set, if the code is running in a compatible runtime (i.e. Node.js)
+     * then the .unref() will be used to ensure that this delay does not
+     * block the process shutdown.
+     */
+    unref?: boolean
+} = {}) =>
+    new Promise((resolve) => {
+        const timer = setTimeout(resolve, ms);
+
+        if (options.unref && (timer as any).unref) {
+            (timer as any).unref();
+        }
+    });
 
 export async function doWhile<T>(
     doFn: () => Promise<T>,
