@@ -46,6 +46,43 @@ export abstract class CustomError extends Error {
     }
 }
 
+export class ErrorWithExtras extends CustomError {
+    constructor(
+        message: string,
+        extras: {
+            code?: string,
+            statusCode?: number,
+            cause?: Error
+        }
+    ) {
+        super(message);
+
+        this.code = extras.code;
+        this.statusCode = extras.statusCode;
+        this.cause = extras.cause;
+    }
+
+    public readonly code?: string;
+    public readonly statusCode?: number;
+    public readonly cause?: Error;
+}
+
+export class StatusError extends ErrorWithExtras {
+    constructor(
+        /**
+         * Should be a valid HTTP status code
+         */
+        statusCode: number,
+        message: string,
+        extras: {
+            code?: string,
+            cause?: Error
+        } = {}
+    ) {
+        super(message, { ...extras, statusCode: statusCode });
+    }
+}
+
 /**
  * An error to throw in expected-never cases - by using this, you ask TypeScript to
  * be sure that it agrees that the case is truly unreachable.
