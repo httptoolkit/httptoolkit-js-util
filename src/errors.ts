@@ -38,8 +38,11 @@ export function asErrorLike(error: any): ErrorLike {
 // Tiny wrapper to make it super easy to make custom error classes where .name behaves correctly.
 export abstract class CustomError extends Error {
     constructor(message?: string) {
-        super(message);
+        super(message); // 'Error' breaks prototype chain here
+
+        // This restores the details of the real error subclass:
         this.name = new.target.name;
+        Object.setPrototypeOf(this, new.target.prototype);
     }
 }
 
