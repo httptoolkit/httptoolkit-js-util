@@ -17,7 +17,7 @@ export type ErrorLike = Partial<Error> & {
  * actually an error-like
  */
 export function isErrorLike(error: any): error is ErrorLike {
-    return typeof error === 'object' && (
+    return error && typeof error === 'object' && (
         error instanceof Error ||
         error.message ||
         error.code ||
@@ -29,9 +29,12 @@ export function isErrorLike(error: any): error is ErrorLike {
  * A convenience method to make something error-ish into an actual Error instance.
  */
 export function asErrorLike(error: any): ErrorLike {
-    if (isErrorLike(error)) return error as ErrorLike;
-    else {
-        return new Error(error.message || error?.toString() || '[unknown error]');
+    if (isErrorLike(error)) {
+        return error as ErrorLike;
+    } else if (error) {
+        return new Error(error.message || error.toString() || '[Unknown error]');
+    } else {
+        return new Error('[Undefined error]');
     }
 }
 
