@@ -40,7 +40,7 @@ export function asErrorLike(error: any): ErrorLike {
 
 // Tiny wrapper to make it super easy to make custom error classes where .name behaves
 // correctly, and useful metafields can be easily added.
-export abstract class CustomError extends Error {
+export class CustomError extends Error {
     constructor(message?: string, extras: {
         code?: string,
         statusCode?: number,
