@@ -35,27 +35,19 @@ export function asErrorLike(error: any): ErrorLike {
     }
 }
 
-// Tiny wrapper to make it super easy to make custom error classes where .name behaves correctly.
+// Tiny wrapper to make it super easy to make custom error classes where .name behaves
+// correctly, and useful metafields can be easily added.
 export abstract class CustomError extends Error {
-    constructor(message?: string) {
+    constructor(message?: string, extras: {
+        code?: string,
+        statusCode?: number,
+        cause?: Error
+    } = {}) {
         super(message); // 'Error' breaks prototype chain here
 
         // This restores the details of the real error subclass:
         this.name = new.target.name;
         Object.setPrototypeOf(this, new.target.prototype);
-    }
-}
-
-export class ErrorWithExtras extends CustomError {
-    constructor(
-        message: string,
-        extras: {
-            code?: string,
-            statusCode?: number,
-            cause?: Error
-        }
-    ) {
-        super(message);
 
         this.code = extras.code;
         this.statusCode = extras.statusCode;
@@ -67,7 +59,7 @@ export class ErrorWithExtras extends CustomError {
     public readonly cause?: Error;
 }
 
-export class StatusError extends ErrorWithExtras {
+export class StatusError extends CustomError {
     constructor(
         /**
          * Should be a valid HTTP status code
