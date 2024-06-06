@@ -31,7 +31,7 @@ export function isErrorLike(error: any): error is ErrorLike {
 export function asErrorLike(error: any): ErrorLike {
     if (isErrorLike(error)) return error as ErrorLike;
     else {
-        return new Error(error.message || error.toString());
+        return new Error(error.message || error?.toString() || '[unknown error]');
     }
 }
 
