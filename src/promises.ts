@@ -8,7 +8,7 @@ export const delay = (ms: number, options: {
      */
     unref?: boolean
 } = {}) =>
-    new Promise((resolve) => {
+    new Promise<void>((resolve) => {
         const timer = setTimeout(resolve, ms);
 
         if (options.unref && (timer as any).unref) {
