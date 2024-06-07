@@ -40,7 +40,7 @@ export function asErrorLike(error: any): ErrorLike {
 
 // Tiny wrapper to make it super easy to make custom error classes where .name behaves
 // correctly, and useful metafields can be easily added.
-export class CustomError extends Error {
+export class CustomError extends Error implements ErrorLike {
     constructor(message?: string, extras: {
         code?: string,
         statusCode?: number,
@@ -52,9 +52,9 @@ export class CustomError extends Error {
         this.name = new.target.name;
         Object.setPrototypeOf(this, new.target.prototype);
 
-        this.code = extras.code;
-        this.statusCode = extras.statusCode;
-        this.cause = extras.cause;
+        if (extras.code !== undefined) this.code = extras.code;
+        if (extras.statusCode !== undefined) this.statusCode = extras.statusCode;
+        if (extras.cause !== undefined) this.cause = extras.cause;
     }
 
     public readonly code?: string;
