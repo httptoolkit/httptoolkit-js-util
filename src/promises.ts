@@ -44,3 +44,24 @@ export function getDeferred<T = void>(): Deferred<T> {
     // we need the undefined types, and the any here.
     return { resolve, reject, promise } as any;
 }
+
+/**
+ * Wrap a function, so that any parallel calls which happen while the async function
+ * is pending return the same value as the first call (so the function is only run
+ * once, but the result is shared). This is useful for expensive async functions or
+ * race conditions. This ignores arguments completely, and is only applicable for
+ * functions that don't need any other input.
+ */
+export function combineParallelCalls<T>(fn: () => Promise<T>): () => Promise<T> {
+    let pendingPromise: Promise<T> | undefined;
+
+    return () => {
+        if (pendingPromise === undefined) {
+            pendingPromise = fn().finally(() => {
+                pendingPromise = undefined;
+            });
+        }
+
+        return pendingPromise;
+    };
+}
