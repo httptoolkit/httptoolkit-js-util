@@ -25,24 +25,27 @@ export async function doWhile<T>(
     } while (await whileFn());
 }
 
-export interface Deferred<T> {
+/**
+ * A deferred is a promise (you can await it directly) but also exposes the promise
+ * explicitly at .promise, and exposes public resolve & reject callbacks for external
+ * resolution.
+ */
+export interface Deferred<T> extends Promise<T> {
     resolve: (arg: T) => void,
-    reject: (e?: Error) => void,
+    reject: (e: Error) => void,
     promise: Promise<T>
 }
 
 export function getDeferred<T = void>(): Deferred<T> {
-    let resolve: undefined | ((arg: T) => void) = undefined;
-    let reject: undefined | ((e?: Error) => void) = undefined;
+    let resolve!: ((arg: T) => void);
+    let reject!: ((e: Error) => void);
 
-    let promise = new Promise<T>((resolveCb, rejectCb) => {
+    const promise = new Promise<T>((resolveCb, rejectCb) => {
         resolve = resolveCb;
         reject = rejectCb;
     });
 
-    // TS thinks we're using these before they're assigned, which is why
-    // we need the undefined types, and the any here.
-    return { resolve, reject, promise } as any;
+    return Object.assign(promise, { resolve, reject, promise });
 }
 
 /**
