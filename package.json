@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/httptoolkit/httptoolkit-js-util#readme",
   "devDependencies": {
-    "typescript": "5.2.2"
+    "typescript": "5.9.3"
   }
 }
