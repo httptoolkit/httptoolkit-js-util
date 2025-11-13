@@ -9,7 +9,7 @@ export type ErrorLike = Partial<Error> & {
     signal?: string;
     statusCode?: number;
     statusMessage?: string;
-    cause?: ErrorLike;
+    cause?: ErrorLike | Error | unknown; // Needs to be compatible with Error types for this
 };
 
 /**
