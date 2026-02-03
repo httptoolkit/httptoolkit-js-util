@@ -76,6 +76,8 @@ export class StatusError extends CustomError {
     ) {
         super(message, { ...extras, statusCode: statusCode });
     }
+
+    declare readonly statusCode: number;
 }
 
 /**
